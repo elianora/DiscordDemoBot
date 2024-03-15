@@ -9,7 +9,7 @@ builder.Services.AddSingleton(serviceProvider =>
 {
     var discordConfig = new DiscordConfiguration
     {
-        Token = builder.Configuration["DiscordBot:Token"],
+        Token = builder.Configuration["DiscordBotToken"],
         TokenType = TokenType.Bot,
         Intents = DiscordIntents.AllUnprivileged
     };
