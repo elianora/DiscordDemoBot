@@ -10,7 +10,7 @@ public class BasicCommands(ILogger<BasicCommands> logger) : ApplicationCommandMo
     {
         if (logger.IsEnabled(LogLevel.Debug))
         {
-            logger.Log(LogLevel.Debug, "Responding to ping...");
+            logger.Log(LogLevel.Debug, $"Responding to ping from {context.User.Username} in channel {context.Channel.Name}...");
         }
 
         await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new()
@@ -24,7 +24,7 @@ public class BasicCommands(ILogger<BasicCommands> logger) : ApplicationCommandMo
     {
         if (logger.IsEnabled(LogLevel.Debug))
         {
-            logger.Log(LogLevel.Debug, "Getting current user's avatar...");
+            logger.Log(LogLevel.Debug, $"Getting {context.User.Username}'s avatar in channel {context.Channel.Name}...");
         }
 
         await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new()

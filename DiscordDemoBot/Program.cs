@@ -11,7 +11,9 @@ builder.Services.AddSingleton(serviceProvider =>
     {
         Token = builder.Configuration["DiscordBotToken"],
         TokenType = TokenType.Bot,
-        Intents = DiscordIntents.AllUnprivileged
+        Intents = DiscordIntents.AllUnprivileged,
+        MinimumLogLevel = LogLevel.Information,
+        LogTimestampFormat = "MMM dd yyyy - hh:mm:ss tt"
     };
 
     var discordClient = new DiscordClient(discordConfig);
