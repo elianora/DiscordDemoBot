@@ -1,6 +1,8 @@
 using DiscordDemoBot;
+using DiscordDemoBot.EventHandlers;
 using DiscordDemoBot.SlashCommands;
 using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
 var builder = Host.CreateApplicationBuilder(args);
@@ -17,6 +19,8 @@ builder.Services.AddSingleton(serviceProvider =>
     };
 
     var discordClient = new DiscordClient(discordConfig);
+    discordClient.ComponentInteractionCreated += BasicHandlers.OnButtonPressed;
+
     var slashCommandsConfig = new SlashCommandsConfiguration
     {
         Services = serviceProvider
