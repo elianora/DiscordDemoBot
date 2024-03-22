@@ -7,20 +7,29 @@ namespace DiscordDemoBot.EventHandlers;
 
 public class BasicHandlers
 {
-    public static async Task OnButtonPressed(DiscordClient client, ComponentInteractionCreateEventArgs args)
+    public static async Task OnComponentInteraction(DiscordClient client, ComponentInteractionCreateEventArgs args)
     {
-        client.Logger.Log(LogLevel.Debug, $"Button with ID {args.Id} pressed in channel {args.Channel.Name}...");
-        var buttonText = args.Id switch
+        if (args.Id.EndsWith("_button"))
         {
-            ButtonId.Primary => "primary",
-            ButtonId.Secondary => "secondary",
-            ButtonId.Success => "success",
-            ButtonId.Danger => "danger",
-            _ => throw new ArgumentException("Unknown button type!")
-        };
+            client.Logger.Log(LogLevel.Debug, $"Button with ID {args.Id} pressed in channel {args.Channel.Name}...");
+            var buttonText = args.Id switch
+            {
+                ButtonId.Primary => "primary",
+                ButtonId.Secondary => "secondary",
+                ButtonId.Success => "success",
+                ButtonId.Danger => "danger",
+                _ => throw new ArgumentException("Unknown button type!")
+            };
 
-        var messageBuilder = new DiscordInteractionResponseBuilder().WithContent($"The {buttonText} button was pressed!");
-        await args.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, messageBuilder);
+            var messageBuilder = new DiscordInteractionResponseBuilder().WithContent($"The {buttonText} button was pressed!");
+            await args.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, messageBuilder);
+        }
+        else if (args.Id.EndsWith("_dropdown"))
+        {
+            client.Logger.Log(LogLevel.Debug, $"Dropdown with ID {args.Id} had an option selected in channel {args.Channel.Name}...");
+            var messageBuilder = new DiscordInteractionResponseBuilder().WithContent($"Option {args.Interaction.Data.Values[0]} was selected");
+            await args.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, messageBuilder);
+        }
     }
 }
 

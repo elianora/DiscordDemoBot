@@ -19,7 +19,7 @@ builder.Services.AddSingleton(serviceProvider =>
     };
 
     var discordClient = new DiscordClient(discordConfig);
-    discordClient.ComponentInteractionCreated += BasicHandlers.OnButtonPressed;
+    discordClient.ComponentInteractionCreated += BasicHandlers.OnComponentInteraction;
 
     var slashCommandsConfig = new SlashCommandsConfiguration
     {

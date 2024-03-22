@@ -42,4 +42,20 @@ public class BasicCommands : ApplicationCommandModule
         var messageBuilder = new DiscordInteractionResponseBuilder().WithContent("Please select a button.").AddComponents(buttons);
         await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, messageBuilder);
     }
+
+    [SlashCommand("dropdown-test", "Tests dropdown interactivity")]
+    public async Task DropdownTestAsync(InteractionContext context)
+    {
+        context.Client.Logger.Log(LogLevel.Debug, $"Presenting dropdown for {context.User.Username} in channel {context.Channel.Name}...");
+        var dropdownOptions = new List<DiscordSelectComponentOption>() 
+        {
+            new("Option 1", "1", "Select this option for 1"),
+            new("Option 2", "2", "Select this option for 2"),
+            new("Option 3", "3", "Select this option for 3")
+        };
+
+        var dropdown = new DiscordSelectComponent(DropdownId.TestDropdown, "Select an option...", dropdownOptions);
+        var messageBuilder = new DiscordInteractionResponseBuilder().AddComponents(dropdown);
+        await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, messageBuilder);
+    }
 }
