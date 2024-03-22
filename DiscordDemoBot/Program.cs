@@ -2,7 +2,6 @@ using DiscordDemoBot;
 using DiscordDemoBot.EventHandlers;
 using DiscordDemoBot.SlashCommands;
 using DSharpPlus;
-using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
 var builder = Host.CreateApplicationBuilder(args);

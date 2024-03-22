@@ -2,7 +2,6 @@
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DiscordDemoBot.Models;
-using System.Text.RegularExpressions;
 
 namespace DiscordDemoBot.EventHandlers;
 
