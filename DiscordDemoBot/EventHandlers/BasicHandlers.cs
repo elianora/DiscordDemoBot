@@ -25,7 +25,7 @@ public class BasicHandlers
             var messageBuilder = new DiscordInteractionResponseBuilder().WithContent($"The {buttonText} button was pressed!");
             await args.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, messageBuilder);
         }
-        else if (args.Id.EndsWith("_dropdown"))
+        else if (args.Id == DropdownId.TestDropdown)
         {
             var selectedValue = args.Interaction.Data.Values.FirstOrDefault();
             client.Logger.Log(LogLevel.Debug, $"Dropdown with ID {args.Id} had the {selectedValue} option selected in channel {args.Channel.Name}");
