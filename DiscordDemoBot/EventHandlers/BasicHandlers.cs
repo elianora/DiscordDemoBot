@@ -18,7 +18,7 @@ public class BasicHandlers
                 ButtonId.Secondary => "secondary",
                 ButtonId.Success => "success",
                 ButtonId.Danger => "danger",
-                _ => throw new ArgumentException("Unknown button type!")
+                var buttonId => throw new ArgumentException($"Unknown button type {buttonId}!")
             };
 
             var messageBuilder = new DiscordInteractionResponseBuilder().WithContent($"The {buttonText} button was pressed!");
@@ -35,10 +35,7 @@ public class BasicHandlers
         else
         {
             client.Logger.Log(LogLevel.Debug, $"Unknown component with ID {args.Id} had an interaction in channel {args.Channel.Name}");
-            await args.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new()
-            {
-                Content = "An unknown interaction occurred!"
-            });
+            throw new ArgumentException($"Unknown component interaction type {args.Id}");
         }
     }
 }
