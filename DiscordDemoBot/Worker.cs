@@ -2,25 +2,17 @@ using DSharpPlus;
 
 namespace DiscordDemoBot;
 
-public class Worker(ILogger<Worker> logger, DiscordClient discordClient) : BackgroundService
+public class Worker(DiscordClient discordClient) : BackgroundService
 {
     public override async Task StartAsync(CancellationToken cancellationToken)
     {
-        if (logger.IsEnabled(LogLevel.Information))
-        {
-            logger.Log(LogLevel.Information, "Starting DiscordDemoBot...");
-        }
-
+        discordClient.Logger.Log(LogLevel.Information, "Starting DiscordDemoBot...");
         await discordClient.ConnectAsync();
     }
 
     public override async Task StopAsync(CancellationToken cancellationToken)
     {
-        if (logger.IsEnabled(LogLevel.Information))
-        {
-            logger.Log(LogLevel.Information, "Stopping DiscordDemoBot...");
-        }
-
+        discordClient.Logger.Log(LogLevel.Information, "Stopping DiscordDemoBot...");
         await discordClient.DisconnectAsync();
         discordClient.Dispose();
     }

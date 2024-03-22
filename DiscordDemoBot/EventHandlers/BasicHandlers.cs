@@ -2,6 +2,7 @@
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DiscordDemoBot.Models;
+using System.Text.RegularExpressions;
 
 namespace DiscordDemoBot.EventHandlers;
 
@@ -11,7 +12,7 @@ public class BasicHandlers
     {
         if (args.Id.EndsWith("_button"))
         {
-            client.Logger.Log(LogLevel.Debug, $"Button with ID {args.Id} pressed in channel {args.Channel.Name}...");
+            client.Logger.Log(LogLevel.Debug, $"Button with ID {args.Id} pressed in channel {args.Channel.Name}");
             var buttonText = args.Id switch
             {
                 ButtonId.Primary => "primary",
@@ -26,9 +27,19 @@ public class BasicHandlers
         }
         else if (args.Id.EndsWith("_dropdown"))
         {
-            client.Logger.Log(LogLevel.Debug, $"Dropdown with ID {args.Id} had an option selected in channel {args.Channel.Name}...");
-            var messageBuilder = new DiscordInteractionResponseBuilder().WithContent($"Option {args.Interaction.Data.Values[0]} was selected");
+            var selectedValue = args.Interaction.Data.Values.FirstOrDefault();
+            client.Logger.Log(LogLevel.Debug, $"Dropdown with ID {args.Id} had the {selectedValue} option selected in channel {args.Channel.Name}");
+            
+            var messageBuilder = new DiscordInteractionResponseBuilder().WithContent($"Option {selectedValue} was selected");
             await args.Interaction.CreateResponseAsync(InteractionResponseType.UpdateMessage, messageBuilder);
+        }
+        else
+        {
+            client.Logger.Log(LogLevel.Debug, $"Unknown component with ID {args.Id} had an interaction in channel {args.Channel.Name}");
+            await args.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new()
+            {
+                Content = "An unknown interaction occurred!"
+            });
         }
     }
 }

@@ -10,7 +10,7 @@ public class BasicCommands : ApplicationCommandModule
     [SlashCommand("ping", "Pings the bot")]
     public async Task PingAsync(InteractionContext context)  
     {
-        context.Client.Logger.Log(LogLevel.Debug, $"Responding to ping from {context.User.Username} in channel {context.Channel.Name}...");
+        context.Client.Logger.Log(LogLevel.Debug, $"Responding to ping from {context.User.Username} in channel {context.Channel.Name}");
         await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new()
         {
             Content = "Pong"
@@ -20,7 +20,7 @@ public class BasicCommands : ApplicationCommandModule
     [SlashCommand("avatar", "Gets the current user's avatar")]
     public async Task GetAvatarAsync(InteractionContext context)
     {
-        context.Client.Logger.Log(LogLevel.Debug, $"Getting {context.User.Username}'s avatar in channel {context.Channel.Name}...");
+        context.Client.Logger.Log(LogLevel.Debug, $"Getting {context.User.Username}'s avatar in channel {context.Channel.Name}");
         await context.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new()
         {
             Content = context.User.AvatarUrl,
@@ -30,7 +30,7 @@ public class BasicCommands : ApplicationCommandModule
     [SlashCommand("button-test", "Tests button interactivity")]
     public async Task ButtonTestAsync(InteractionContext context)
     {
-        context.Client.Logger.Log(LogLevel.Debug, $"Presenting test buttons for {context.User.Username} in channel {context.Channel.Name}...");
+        context.Client.Logger.Log(LogLevel.Debug, $"Presenting test buttons for {context.User.Username} in channel {context.Channel.Name}");
         var buttons = new DiscordButtonComponent[]
         {
             new(ButtonStyle.Primary, ButtonId.Primary, "Primary"),
@@ -46,7 +46,7 @@ public class BasicCommands : ApplicationCommandModule
     [SlashCommand("dropdown-test", "Tests dropdown interactivity")]
     public async Task DropdownTestAsync(InteractionContext context)
     {
-        context.Client.Logger.Log(LogLevel.Debug, $"Presenting dropdown for {context.User.Username} in channel {context.Channel.Name}...");
+        context.Client.Logger.Log(LogLevel.Debug, $"Presenting dropdown for {context.User.Username} in channel {context.Channel.Name}");
         var dropdownOptions = new List<DiscordSelectComponentOption>() 
         {
             new("Option 1", "1", "Select this option for 1"),
